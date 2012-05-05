@@ -73,8 +73,8 @@ function flamingo_collect_contacts_from_users() {
 			continue;
 
 		$props = array(
-			'first_name' => $user->first_name,
-			'last_name' => $user->last_name );
+			'first_name' => empty( $user->first_name ) ? '' : $user->first_name,
+			'last_name' => empty( $user->last_name ) ? '' : $user->last_name );
 
 		Flamingo_Contact::add( array(
 			'email' => $email,
