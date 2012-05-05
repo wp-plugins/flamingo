@@ -20,14 +20,11 @@ require_once FLAMINGO_PLUGIN_DIR . '/includes/functions.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/capabilities.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-contact.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-inbound-message.php';
+require_once FLAMINGO_PLUGIN_DIR . '/includes/user.php';
+require_once FLAMINGO_PLUGIN_DIR . '/includes/comment.php';
 
 if ( is_admin() )
 	require_once FLAMINGO_PLUGIN_DIR . '/admin/admin.php';
-
-/* Load modules */
-
-require_once FLAMINGO_PLUGIN_DIR . '/modules/user.php';
-require_once FLAMINGO_PLUGIN_DIR . '/modules/comment.php';
 
 /* Init */
 
