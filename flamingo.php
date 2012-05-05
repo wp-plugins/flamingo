@@ -28,7 +28,6 @@ if ( is_admin() )
 
 require_once FLAMINGO_PLUGIN_DIR . '/modules/user.php';
 require_once FLAMINGO_PLUGIN_DIR . '/modules/comment.php';
-require_once FLAMINGO_PLUGIN_DIR . '/modules/contact-form-7.php';
 
 /* Init */
 
