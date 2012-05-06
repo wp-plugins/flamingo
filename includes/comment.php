@@ -3,40 +3,6 @@
 ** Module for WordPress comment.
 **/
 
-add_filter( 'flamingo_contact_history_column', 'flamingo_comment_contact_history_column', 10, 2 );
-
-function flamingo_comment_contact_history_column( $output, $item ) {
-	if ( empty( $item->email ) )
-		return $output;
-
-	$count = (int) get_comments( array(
-		'count' => true,
-		'author_email' => $item->email,
-		'status' => 'approve',
-		'type' => 'comment' ) );
-
-	if ( 0 == $count ) {
-		return $output;
-	} elseif ( 1 == $count ) {
-		$history = __( '1 Comment', 'flamingo' );
-	} else {
-		$history = str_replace( '%',
-			number_format_i18n( $count ), __( '% Comments', 'flamingo' ) );
-	}
-
-	if ( 0 < $count ) {
-		$link = sprintf( 'edit-comments.php?s=%s', urlencode( $item->email ) );
-		$history = '<a href="' . admin_url( $link ) . '">' . $history . '</a>';
-	}
-
-	if ( ! empty( $output ) )
-		$output .= '<br />';
-
-	$output .= $history;
-
-	return $output;
-}
-
 add_action( 'wp_insert_comment', 'flamingo_insert_comment' );
 
 function flamingo_insert_comment( $comment_id ) {

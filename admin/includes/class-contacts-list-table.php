@@ -172,7 +172,58 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 	}
 
 	function column_history( $item ) {
-		return apply_filters( 'flamingo_contact_history_column', '', $item );
+		$history = array();
+
+		// User
+		if ( $user = get_user_by( 'email', $item->email ) ) {
+			$link = sprintf( 'user-edit.php?user_id=%d', $user->ID );
+			$history[] = '<a href="' . admin_url( $link ) . '">'
+				. esc_html( __( 'User', 'flamingo' ) ) . '</a>';
+		}
+
+		// Comment
+		$comment_count = (int) get_comments( array(
+			'count' => true,
+			'author_email' => $item->email,
+			'status' => 'approve',
+			'type' => 'comment' ) );
+
+		if ( 0 < $comment_count ) {
+			$link = sprintf( 'edit-comments.php?s=%s', urlencode( $item->email ) );
+			$history[] = '<a href="' . admin_url( $link ) . '">'
+				. sprintf( __( 'Comment (%d)', 'flamingo' ), $comment_count ) . '</a>';
+		}
+
+		// Contact channels
+		$terms = get_terms( Flamingo_Inbound_Message::channel_taxonomy );
+
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( (array) $terms as $term ) {
+				Flamingo_Inbound_Message::find( array(
+					'channel' => $term->slug,
+					's' => $item->email ) );
+
+				$count = (int) Flamingo_Inbound_Message::$found_items;
+
+				if ( ! $count )
+					continue;
+
+				$link = sprintf( 'admin.php?page=flamingo_inbound&channel=%1$s&s=%2$s',
+					urlencode( $term->slug ), urlencode( $item->email ) );
+				$history[] = '<a href="' . admin_url( $link ) . '">'
+					. sprintf( _x( '%s (%d)', 'contact history', 'flamingo' ), $term->name, $count )
+					. '</a>';
+			}
+		}
+
+		$output = '';
+
+		foreach ( $history as $item )
+			$output .= '<li>' . $item . '</li>';
+
+		$output = '<ul class="contact-history">' . $output . '</ul>';
+
+		return $output;
 	}
 
 	function column_last_contacted( $item ) {
