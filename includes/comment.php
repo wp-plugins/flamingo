@@ -39,7 +39,7 @@ function flamingo_collect_contacts_from_comments() {
 	$comments = get_comments( array(
 		'status' => 'approve',
 		'type' => 'comment',
-		'number' => 100 ) );
+		'number' => 20 ) );
 
 	foreach ( $comments as $comment ) {
 		$email = $comment->comment_author_email;

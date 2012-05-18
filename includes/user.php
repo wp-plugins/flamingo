@@ -30,7 +30,7 @@ add_action( 'activate_' . FLAMINGO_PLUGIN_BASENAME, 'flamingo_collect_contacts_f
 
 function flamingo_collect_contacts_from_users() {
 	$users = get_users( array(
-		'number' => 100 ) );
+		'number' => 20 ) );
 
 	foreach ( $users as $user ) {
 		$email = $user->user_email;
