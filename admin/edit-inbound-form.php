@@ -18,7 +18,7 @@ add_meta_box( 'inboundfieldsdiv', __( 'Fields', 'flamingo' ),
 
 ?>
 <div class="wrap columns-2">
-<?php screen_icon( 'edit-comments' ); ?>
+<?php screen_icon(); ?>
 
 <h2><?php echo esc_html( __( 'Inbound Message', 'flamingo' ) ); ?></h2>
 

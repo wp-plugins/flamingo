@@ -7,7 +7,8 @@ add_action( 'admin_menu', 'flamingo_admin_menu' );
 function flamingo_admin_menu() {
 	add_menu_page(
 		__( 'Flamingo Address Book', 'flamingo' ), __( 'Flamingo', 'flamingo' ),
-		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page' );
+		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page',
+		plugins_url( 'admin/images/menu-icon.png', FLAMINGO_PLUGIN_BASENAME ) );
 
 	$contact_admin = add_submenu_page( 'flamingo',
 		__( 'Flamingo Address Book', 'flamingo' ), __( 'Address Book', 'flamingo' ),
@@ -147,7 +148,7 @@ function flamingo_contact_admin_page() {
 
 ?>
 <div class="wrap">
-<?php screen_icon( 'users' ); ?>
+<?php screen_icon(); ?>
 
 <h2><?php
 	echo esc_html( __( 'Flamingo Address Book', 'flamingo' ) );
@@ -316,7 +317,7 @@ function flamingo_inbound_admin_page() {
 
 ?>
 <div class="wrap">
-<?php screen_icon( 'edit-comments' ); ?>
+<?php screen_icon(); ?>
 
 <h2><?php
 	echo esc_html( __( 'Inbound Messages', 'flamingo' ) );

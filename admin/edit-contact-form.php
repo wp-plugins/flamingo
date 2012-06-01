@@ -21,7 +21,7 @@ add_meta_box( 'contactnamediv', __( 'Name', 'flamingo' ),
 
 ?>
 <div class="wrap columns-2">
-<?php screen_icon( 'users' ); ?>
+<?php screen_icon(); ?>
 
 <h2><?php echo esc_html( __( 'Edit Contact', 'flamingo' ) ); ?></h2>
 

@@ -11,6 +11,10 @@ Flamingo allows you to manage your contact list on WordPress.
 
 Flamingo is a plugin created to be a total CRM package for WordPress. With the current version, you can manage your contact list and messages submitted via Contact Form 7. It has not yet matured, but we are enhancing it rapidly.
 
+= Icon Design =
+
+* [Takao Honda](http://www.takaohonda.jp/)
+
 == Installation ==
 
 1. Upload the entire `flamingo` folder to the `/wp-content/plugins/` directory.
