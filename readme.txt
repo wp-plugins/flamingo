@@ -1,15 +1,21 @@
 === Flamingo ===
 Contributors: takayukister, megumithemes
-Tags: contact, mail, crm
+Tags: bird, contact, mail, crm
 Requires at least: 3.3
 Tested up to: 3.3.2
-Stable tag: 1.0-beta
+Stable tag: 1.0
 
-Flamingo allows you to manage your contact list on WordPress.
+Flamingo manages your contact list on WordPress.
 
 == Description ==
 
-Flamingo is a plugin created to be a total CRM package for WordPress. With the current version, you can manage your contact list and messages submitted via Contact Form 7. It has not yet matured, but we are enhancing it rapidly.
+Flamingo is a WordPress plugin created to be a total CRM package. With this version, you can manage your contact list and messages submitted via contact form plugins. It has not yet matured, but we are enhancing it rapidly.
+
+= Translators =
+
+* Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
+
+If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [me](http://ideasilo.wordpress.com/about/) so that I can bundle it into Flamingo. You can download the latest [POT file](http://plugins.svn.wordpress.org/flamingo/trunk/languages/flamingo.pot).
 
 = Icon Design =
 
