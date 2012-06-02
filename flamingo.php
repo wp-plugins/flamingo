@@ -14,7 +14,9 @@ define( 'FLAMINGO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 define( 'FLAMINGO_PLUGIN_NAME', trim( dirname( FLAMINGO_PLUGIN_BASENAME ), '/' ) );
 
-define( 'FLAMINGO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . FLAMINGO_PLUGIN_NAME );
+define( 'FLAMINGO_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
+
+define( 'FLAMINGO_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 
 require_once FLAMINGO_PLUGIN_DIR . '/includes/functions.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/capabilities.php';

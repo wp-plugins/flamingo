@@ -8,7 +8,7 @@ function flamingo_admin_menu() {
 	add_menu_page(
 		__( 'Flamingo Address Book', 'flamingo' ), __( 'Flamingo', 'flamingo' ),
 		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page',
-		plugins_url( 'admin/images/menu-icon.png', FLAMINGO_PLUGIN_BASENAME ) );
+		flamingo_plugin_url( 'admin/images/menu-icon.png' ) );
 
 	$contact_admin = add_submenu_page( 'flamingo',
 		__( 'Flamingo Address Book', 'flamingo' ), __( 'Address Book', 'flamingo' ),
@@ -46,11 +46,11 @@ function flamingo_admin_enqueue_scripts( $hook_suffix ) {
 	wp_enqueue_script( 'postbox' );
 
 	wp_enqueue_script( 'flamingo-admin',
-		plugins_url( 'admin/script.js', FLAMINGO_PLUGIN_BASENAME ),
+		flamingo_plugin_url( 'admin/script.js' ),
 		array( 'jquery' ), FLAMINGO_VERSION, true );
 
 	wp_enqueue_style( 'flamingo-admin',
-		plugins_url( 'admin/style.css', FLAMINGO_PLUGIN_BASENAME ),
+		flamingo_plugin_url( 'admin/style.css' ),
 		array(), FLAMINGO_VERSION, 'all' );
 }
 
