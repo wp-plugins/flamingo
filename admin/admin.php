@@ -2,10 +2,10 @@
 
 require_once FLAMINGO_PLUGIN_DIR . '/admin/admin-functions.php';
 
-add_action( 'admin_menu', 'flamingo_admin_menu' );
+add_action( 'admin_menu', 'flamingo_admin_menu', 8 );
 
 function flamingo_admin_menu() {
-	add_menu_page(
+	add_object_page(
 		__( 'Flamingo Address Book', 'flamingo' ), __( 'Flamingo', 'flamingo' ),
 		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page',
 		flamingo_plugin_url( 'admin/images/menu-icon.png' ) );
