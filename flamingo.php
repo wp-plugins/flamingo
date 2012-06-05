@@ -6,7 +6,7 @@ Description: Flamingo manages your contact list on WordPress.
 Author: Takayuki Miyoshi
 Text Domain: flamingo
 Domain Path: /languages/
-Version: 1.0-beta
+Version: 1.0
 */
 
 define( 'FLAMINGO_VERSION', '1.0' );
