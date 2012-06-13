@@ -15,6 +15,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 
 = Translators =
 
+* Dutch (nl_NL) - [Martijn van Egmond](http://tensheep.nl/)
 * Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [me](http://ideasilo.wordpress.com/about/) so that I can bundle it into Flamingo. You can download the latest [POT file](http://plugins.svn.wordpress.org/flamingo/trunk/languages/flamingo.pot).
