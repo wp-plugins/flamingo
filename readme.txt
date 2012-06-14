@@ -15,6 +15,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 
 = Translators =
 
+* Brazilian Portuguese (pt_BR) - Ilton Alberto Junior
 * Dutch (nl_NL) - [TenSheep](http://tensheep.nl/)
 * Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
 
