@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Flamingo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-06 00:47+0900\n"
-"PO-Revision-Date: 2012-06-13 12:18+0100\n"
+"PO-Revision-Date: 2012-06-13 12:44+0100\n"
 "Last-Translator: Martijn <martijn@tensheep.nl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr "Reactie (%d)"
 #: flamingo/admin/includes/class-inbound-messages-list-table.php:242
 #: flamingo/includes/class-inbound-message.php:107
 msgid "Y/m/d g:i:s A"
-msgstr "Y/m/d g:i:s A"
+msgstr "j F Y om g:i"
 
 #: flamingo/admin/includes/class-contacts-list-table.php:240
 #: flamingo/admin/includes/class-inbound-messages-list-table.php:249
@@ -221,7 +221,7 @@ msgstr "%s geleden"
 #: flamingo/admin/includes/class-contacts-list-table.php:242
 #: flamingo/admin/includes/class-inbound-messages-list-table.php:251
 msgid "Y/m/d"
-msgstr "Y/m/d"
+msgstr "j F Y"
 
 #: flamingo/admin/includes/class-inbound-messages-list-table.php:13
 msgid "Channel"
