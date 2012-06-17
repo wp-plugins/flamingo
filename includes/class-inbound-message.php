@@ -99,9 +99,7 @@ class Flamingo_Inbound_Message {
 	}
 
 	public function __construct( $post = null ) {
-		$post = get_post( $post );
-
-		if ( $post ) {
+		if ( ! empty( $post ) && ( $post = get_post( $post ) ) ) {
 			$this->id = $post->ID;
 
 			$this->date = get_the_time( __( 'Y/m/d g:i:s A', 'flamingo' ), $this->id );

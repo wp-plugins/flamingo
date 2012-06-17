@@ -108,9 +108,7 @@ class Flamingo_Contact {
 	}
 
 	public function __construct( $post = null ) {
-		$post = get_post( $post );
-
-		if ( $post ) {
+		if ( ! empty( $post ) && ( $post = get_post( $post ) ) ) {
 			$this->id = $post->ID;
 			$this->email = get_post_meta( $post->ID, '_email', true );
 			$this->name = get_post_meta( $post->ID, '_name', true );
