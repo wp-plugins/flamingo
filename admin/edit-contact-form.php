@@ -11,13 +11,13 @@ if ( ! empty( $post->id ) ) {
 }
 
 add_meta_box( 'contactsubmitdiv', __( 'Save', 'flamingo' ),
-	'flamingo_contact_submit_meta_box', 'flamingo-contact', 'side', 'core' );
+	'flamingo_contact_submit_meta_box', 'flamingo', 'side', 'core' );
 
 add_meta_box( 'contacttagsdiv', __( 'Tags', 'flamingo' ),
-	'flamingo_contact_tags_meta_box', 'flamingo-contact', 'side', 'core' );
+	'flamingo_contact_tags_meta_box', 'flamingo', 'side', 'core' );
 
 add_meta_box( 'contactnamediv', __( 'Name', 'flamingo' ),
-	'flamingo_contact_name_meta_box', 'flamingo-contact', 'normal', 'core' );
+	'flamingo_contact_name_meta_box', 'flamingo', 'normal', 'core' );
 
 ?>
 <div class="wrap columns-2">
@@ -37,7 +37,7 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 <div id="poststuff" class="metabox-holder has-right-sidebar">
 <div id="side-info-column" class="inner-sidebar">
 <?php
-do_meta_boxes( 'flamingo-contact', 'side', $post );
+do_meta_boxes( 'flamingo', 'side', $post );
 ?>
 </div><!-- #side-info-column -->
 
@@ -56,8 +56,8 @@ do_meta_boxes( 'flamingo-contact', 'side', $post );
 </div>
 
 <?php
-do_meta_boxes( 'flamingo-contact', 'normal', $post );
-do_meta_boxes( 'flamingo-contact', 'advanced', $post );
+do_meta_boxes( 'flamingo', 'normal', $post );
+do_meta_boxes( 'flamingo', 'advanced', $post );
 ?>
 </div><!-- #post-body-content -->
 </div><!-- #post-body -->

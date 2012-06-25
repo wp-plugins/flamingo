@@ -11,10 +11,10 @@ if ( ! empty( $post->id ) ) {
 }
 
 add_meta_box( 'inboundsubmitdiv', __( 'Save', 'flamingo' ),
-	'flamingo_inbound_submit_meta_box', 'flamingo-inbound', 'side', 'core' );
+	'flamingo_inbound_submit_meta_box', 'flamingo', 'side', 'core' );
 
 add_meta_box( 'inboundfieldsdiv', __( 'Fields', 'flamingo' ),
-	'flamingo_inbound_fields_meta_box', 'flamingo-inbound', 'normal', 'core' );
+	'flamingo_inbound_fields_meta_box', 'flamingo', 'normal', 'core' );
 
 ?>
 <div class="wrap columns-2">
@@ -34,7 +34,7 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 <div id="poststuff" class="metabox-holder has-right-sidebar">
 <div id="side-info-column" class="inner-sidebar">
 <?php
-do_meta_boxes( 'flamingo-inbound', 'side', $post );
+do_meta_boxes( 'flamingo', 'side', $post );
 ?>
 </div><!-- #side-info-column -->
 
@@ -65,8 +65,8 @@ do_meta_boxes( 'flamingo-inbound', 'side', $post );
 <br class="clear" />
 
 <?php
-do_meta_boxes( 'flamingo-inbound', 'normal', $post );
-do_meta_boxes( 'flamingo-inbound', 'advanced', $post );
+do_meta_boxes( 'flamingo', 'normal', $post );
+do_meta_boxes( 'flamingo', 'advanced', $post );
 ?>
 </div><!-- #post-body-content -->
 </div><!-- #post-body -->

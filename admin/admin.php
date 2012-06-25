@@ -42,12 +42,9 @@ function flamingo_admin_enqueue_scripts( $hook_suffix ) {
 	if ( false === strpos( $hook_suffix, 'flamingo' ) )
 		return;
 
-	wp_enqueue_script( 'thickbox' );
-	wp_enqueue_script( 'postbox' );
-
 	wp_enqueue_script( 'flamingo-admin',
 		flamingo_plugin_url( 'admin/script.js' ),
-		array( 'jquery' ), FLAMINGO_VERSION, true );
+		array( 'postbox' ), FLAMINGO_VERSION, true );
 
 	wp_enqueue_style( 'flamingo-admin',
 		flamingo_plugin_url( 'admin/style.css' ),
@@ -118,17 +115,19 @@ function flamingo_load_contact_admin() {
 		exit();
 	}
 
-	$current_screen = get_current_screen();
-
 	if ( ! class_exists( 'Flamingo_Contacts_List_Table' ) )
 		require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-contacts-list-table.php';
 
-	add_filter( 'manage_' . $current_screen->id . '_columns',
-		array( 'Flamingo_Contacts_List_Table', 'define_columns' ) );
+	if ( empty( $_GET['post'] ) ) {
+		$current_screen = get_current_screen();
 
-	add_screen_option( 'per_page', array(
-		'label' => __( 'Contacts', 'flamingo' ),
-		'default' => 20 ) );
+		add_filter( 'manage_' . $current_screen->id . '_columns',
+			array( 'Flamingo_Contacts_List_Table', 'define_columns' ) );
+
+		add_screen_option( 'per_page', array(
+			'label' => __( 'Contacts', 'flamingo' ),
+			'default' => 20 ) );
+	}
 }
 
 function flamingo_contact_admin_page() {
@@ -287,17 +286,19 @@ function flamingo_load_inbound_admin() {
 		exit();
 	}
 
-	$current_screen = get_current_screen();
-
 	if ( ! class_exists( 'Flamingo_Inbound_Messages_List_Table' ) )
 		require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-inbound-messages-list-table.php';
 
-	add_filter( 'manage_' . $current_screen->id . '_columns',
-		array( 'Flamingo_Inbound_Messages_List_Table', 'define_columns' ) );
+	if ( empty( $_GET['post'] ) ) {
+		$current_screen = get_current_screen();
 
-	add_screen_option( 'per_page', array(
-		'label' => __( 'Messages', 'flamingo' ),
-		'default' => 20 ) );
+		add_filter( 'manage_' . $current_screen->id . '_columns',
+			array( 'Flamingo_Inbound_Messages_List_Table', 'define_columns' ) );
+
+		add_screen_option( 'per_page', array(
+			'label' => __( 'Messages', 'flamingo' ),
+			'default' => 20 ) );
+	}
 }
 
 function flamingo_inbound_admin_page() {
