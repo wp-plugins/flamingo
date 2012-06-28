@@ -6,7 +6,7 @@ ul.contact-history {
 	margin: 0;
 }
 
-#poststuff #inboundsubmitdiv .inside, #poststuff #contactsubmitdiv .inside {
+#poststuff #submitdiv .inside {
 	margin: 0;
 	padding: 0;
 }

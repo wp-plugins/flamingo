@@ -10,12 +10,6 @@ if ( ! empty( $post->id ) ) {
 	$nonce_action = 'flamingo-add-inbound';
 }
 
-add_meta_box( 'inboundsubmitdiv', __( 'Save', 'flamingo' ),
-	'flamingo_inbound_submit_meta_box', 'flamingo', 'side', 'core' );
-
-add_meta_box( 'inboundfieldsdiv', __( 'Fields', 'flamingo' ),
-	'flamingo_inbound_fields_meta_box', 'flamingo', 'normal', 'core' );
-
 ?>
 <div class="wrap columns-2">
 <?php screen_icon(); ?>
@@ -34,7 +28,7 @@ wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 <div id="poststuff" class="metabox-holder has-right-sidebar">
 <div id="side-info-column" class="inner-sidebar">
 <?php
-do_meta_boxes( 'flamingo', 'side', $post );
+do_meta_boxes( null, 'side', $post );
 ?>
 </div><!-- #side-info-column -->
 
@@ -65,8 +59,8 @@ do_meta_boxes( 'flamingo', 'side', $post );
 <br class="clear" />
 
 <?php
-do_meta_boxes( 'flamingo', 'normal', $post );
-do_meta_boxes( 'flamingo', 'advanced', $post );
+do_meta_boxes( null, 'normal', $post );
+do_meta_boxes( null, 'advanced', $post );
 ?>
 </div><!-- #post-body-content -->
 </div><!-- #post-body -->

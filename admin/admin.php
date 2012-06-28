@@ -42,13 +42,18 @@ function flamingo_admin_enqueue_scripts( $hook_suffix ) {
 	if ( false === strpos( $hook_suffix, 'flamingo' ) )
 		return;
 
+	wp_enqueue_style( 'flamingo-admin',
+		flamingo_plugin_url( 'admin/style.css' ),
+		array(), FLAMINGO_VERSION, 'all' );
+
 	wp_enqueue_script( 'flamingo-admin',
 		flamingo_plugin_url( 'admin/script.js' ),
 		array( 'postbox' ), FLAMINGO_VERSION, true );
 
-	wp_enqueue_style( 'flamingo-admin',
-		flamingo_plugin_url( 'admin/style.css' ),
-		array(), FLAMINGO_VERSION, 'all' );
+	$current_screen = get_current_screen();
+
+	wp_localize_script( 'flamingo-admin', '_flamingo', array(
+		'screenId' => $current_screen->id ) );
 }
 
 /* Updated Message */
@@ -115,10 +120,22 @@ function flamingo_load_contact_admin() {
 		exit();
 	}
 
-	if ( ! class_exists( 'Flamingo_Contacts_List_Table' ) )
-		require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-contacts-list-table.php';
+	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-	if ( empty( $_GET['post'] ) ) {
+	if ( Flamingo_Contact::post_type == get_post_type( $post_id ) ) {
+		add_meta_box( 'submitdiv', __( 'Save', 'flamingo' ),
+			'flamingo_contact_submit_meta_box', null, 'side', 'core' );
+
+		add_meta_box( 'contacttagsdiv', __( 'Tags', 'flamingo' ),
+			'flamingo_contact_tags_meta_box', null, 'side', 'core' );
+
+		add_meta_box( 'contactnamediv', __( 'Name', 'flamingo' ),
+			'flamingo_contact_name_meta_box', null, 'normal', 'core' );
+
+	} else {
+		if ( ! class_exists( 'Flamingo_Contacts_List_Table' ) )
+			require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-contacts-list-table.php';
+
 		$current_screen = get_current_screen();
 
 		add_filter( 'manage_' . $current_screen->id . '_columns',
@@ -131,15 +148,12 @@ function flamingo_load_contact_admin() {
 }
 
 function flamingo_contact_admin_page() {
-	if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['post'] ) ) {
-		$post_id = absint( $_REQUEST['post'] );
+	$action = flamingo_current_action();
+	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-		if ( Flamingo_Contact::post_type == get_post_type( $post_id ) ) {
-			if ( 'edit' == $_REQUEST['action'] ) {
-				flamingo_contact_edit_page();
-				return;
-			}
-		}
+	if ( 'edit' == $action && Flamingo_Contact::post_type == get_post_type( $post_id ) ) {
+		flamingo_contact_edit_page();
+		return;
 	}
 
 	$list_table = new Flamingo_Contacts_List_Table();
@@ -286,10 +300,19 @@ function flamingo_load_inbound_admin() {
 		exit();
 	}
 
-	if ( ! class_exists( 'Flamingo_Inbound_Messages_List_Table' ) )
-		require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-inbound-messages-list-table.php';
+	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-	if ( empty( $_GET['post'] ) ) {
+	if ( Flamingo_Inbound_Message::post_type == get_post_type( $post_id ) ) {
+		add_meta_box( 'submitdiv', __( 'Save', 'flamingo' ),
+			'flamingo_inbound_submit_meta_box', null, 'side', 'core' );
+
+		add_meta_box( 'inboundfieldsdiv', __( 'Fields', 'flamingo' ),
+			'flamingo_inbound_fields_meta_box', null, 'normal', 'core' );
+
+	} else {
+		if ( ! class_exists( 'Flamingo_Inbound_Messages_List_Table' ) )
+			require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/class-inbound-messages-list-table.php';
+
 		$current_screen = get_current_screen();
 
 		add_filter( 'manage_' . $current_screen->id . '_columns',
@@ -302,15 +325,12 @@ function flamingo_load_inbound_admin() {
 }
 
 function flamingo_inbound_admin_page() {
-	if ( ! empty( $_REQUEST['action'] ) && ! empty( $_REQUEST['post'] ) ) {
-		$post_id = absint( $_REQUEST['post'] );
+	$action = flamingo_current_action();
+	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-		if ( Flamingo_Inbound_Message::post_type == get_post_type( $post_id ) ) {
-			if ( 'edit' == $_REQUEST['action'] ) {
-				flamingo_inbound_edit_page();
-				return;
-			}
-		}
+	if ( 'edit' == $action && Flamingo_Inbound_Message::post_type == get_post_type( $post_id ) ) {
+		flamingo_inbound_edit_page();
+		return;
 	}
 
 	$list_table = new Flamingo_Inbound_Messages_List_Table();
