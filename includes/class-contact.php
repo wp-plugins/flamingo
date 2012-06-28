@@ -18,13 +18,17 @@ class Flamingo_Contact {
 		register_post_type( self::post_type, array(
 			'labels' => array(
 				'name' => __( 'Flamingo Contacts', 'flamingo' ),
-				'singular_name' => __( 'Flamingo Contact', 'flamingo' ) ) ) );
+				'singular_name' => __( 'Flamingo Contact', 'flamingo' ) ),
+			'rewrite' => false,
+			'query_var' => false ) );
 
 		register_taxonomy( self::contact_tag_taxonomy, self::post_type, array(
 			'labels' => array(
 				'name' => __( 'Flamingo Contact Tags', 'flamingo' ),
 				'singular_name' => __( 'Flamingo Contact Tag', 'flamingo' ) ),
-			'public' => false ) );
+			'public' => false,
+			'rewrite' => false,
+			'query_var' => false ) );
 	}
 
 	public static function find( $args = '' ) {

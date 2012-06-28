@@ -20,13 +20,17 @@ class Flamingo_Inbound_Message {
 		register_post_type( self::post_type, array(
 			'labels' => array(
 				'name' => __( 'Flamingo Inbound Messages', 'flamingo' ),
-				'singular_name' => __( 'Flamingo Inbound Message', 'flamingo' ) ) ) );
+				'singular_name' => __( 'Flamingo Inbound Message', 'flamingo' ) ),
+			'rewrite' => false,
+			'query_var' => false ) );
 
 		register_taxonomy( self::channel_taxonomy, self::post_type, array(
 			'labels' => array(
 				'name' => __( 'Flamingo Inbound Message Channels', 'flamingo' ),
 				'singular_name' => __( 'Flamingo Inbound Message Channel', 'flamingo' ) ),
-			'public' => false ) );
+			'public' => false,
+			'rewrite' => false,
+			'query_var' => false ) );
 	}
 
 	public static function find( $args = '' ) {
