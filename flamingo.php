@@ -20,6 +20,7 @@ define( 'FLAMINGO_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
 define( 'FLAMINGO_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
 
 require_once FLAMINGO_PLUGIN_DIR . '/includes/functions.php';
+require_once FLAMINGO_PLUGIN_DIR . '/includes/formatting.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/capabilities.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-contact.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-inbound-message.php';

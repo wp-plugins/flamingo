@@ -152,7 +152,7 @@ function flamingo_inbound_fields_meta_box( $post ) {
 <?php foreach ( (array) $post->fields as $key => $value ) : $alt = 0; ?>
 <tr<?php $alt = 1 - $alt; echo $alt ? ' class="alt"' : ''; ?>>
 <td class="field-title"><?php echo esc_html( $key ); ?></td>
-<td class="field-value"><?php echo wpautop( esc_html( $value ) ); ?></td>
+<td class="field-value"><?php echo flamingo_htmlize( $value ); ?></td>
 </tr>
 <?php endforeach; ?>
 
