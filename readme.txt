@@ -17,6 +17,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 
 * Brazilian Portuguese (pt_BR) - [Ilton Alberto Junior](https://twitter.com/iltonalberto)
 * Dutch (nl_NL) - [TenSheep](http://tensheep.nl/)
+* Hebrew (he_IL) - [Dan Stramer](http://www.dmdesign.co.il/)
 * Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
 * Turkish (tr_TR) - Ömür YANIKOĞLU
 
