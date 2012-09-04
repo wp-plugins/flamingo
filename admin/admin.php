@@ -64,6 +64,8 @@ function flamingo_admin_updated_message() {
 	if ( ! empty( $_REQUEST['message'] ) ) {
 		if ( 'contactupdated' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Contact updated.', 'flamingo' ) );
+		elseif ( 'contactdeleted' == $_REQUEST['message'] )
+			$updated_message = esc_html( __( 'Contact deleted.', 'flamingo' ) );
 		elseif ( 'inboundtrashed' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Messages trashed.', 'flamingo' ) );
 		elseif ( 'inbounduntrashed' == $_REQUEST['message'] )
@@ -115,6 +117,36 @@ function flamingo_load_contact_admin() {
 				'post' => $post->id,
 				'message' => 'contactupdated' ), $redirect_to );
 		}
+
+		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( 'delete' == $action && ! empty( $_REQUEST['post'] ) ) {
+		if ( ! is_array( $_REQUEST['post'] ) )
+			check_admin_referer( 'flamingo-delete-contact_' . $_REQUEST['post'] );
+		else
+			check_admin_referer( 'bulk-posts' );
+
+		$deleted = 0;
+
+		foreach ( (array) $_REQUEST['post'] as $post ) {
+			$post = new Flamingo_Contact( $post );
+
+			if ( empty( $post ) )
+				continue;
+
+			if ( ! current_user_can( 'flamingo_delete_contact', $post->id ) )
+				wp_die( __( 'You are not allowed to delete this item.', 'flamingo' ) );
+
+			if ( ! $post->delete() )
+				wp_die( __( 'Error in deleting.', 'flamingo' ) );
+
+			$deleted += 1;
+		}
+
+		if ( ! empty( $deleted ) )
+			$redirect_to = add_query_arg( array( 'message' => 'contactdeleted' ), $redirect_to );
 
 		wp_safe_redirect( $redirect_to );
 		exit();
