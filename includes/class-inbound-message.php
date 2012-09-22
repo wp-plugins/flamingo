@@ -16,6 +16,7 @@ class Flamingo_Inbound_Message {
 	public $from_email;
 	public $fields;
 	public $meta;
+	public $akismet;
 
 	public static function register_post_type() {
 		register_post_type( self::post_type, array(
@@ -86,7 +87,8 @@ class Flamingo_Inbound_Message {
 			'from_name' => '',
 			'from_email' => '',
 			'fields' => array(),
-			'meta' => array() );
+			'meta' => array(),
+			'akismet' => array() );
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -99,6 +101,7 @@ class Flamingo_Inbound_Message {
 		$obj->from_email = $args['from_email'];
 		$obj->fields = $args['fields'];
 		$obj->meta = $args['meta'];
+		$obj->akismet = $args['akismet'];
 
 		$obj->save();
 
@@ -116,6 +119,7 @@ class Flamingo_Inbound_Message {
 			$this->from_email = get_post_meta( $post->ID, '_from_email', true );
 			$this->fields = get_post_meta( $post->ID, '_fields', true );
 			$this->meta = get_post_meta( $post->ID, '_meta', true );
+			$this->akismet = get_post_meta( $post->ID, '_akismet', true );
 
 			$terms = wp_get_object_terms( $this->id, self::channel_taxonomy );
 
@@ -152,6 +156,7 @@ class Flamingo_Inbound_Message {
 			update_post_meta( $post_id, '_from_email', $this->from_email );
 			update_post_meta( $post_id, '_fields', $this->fields );
 			update_post_meta( $post_id, '_meta', $this->meta );
+			update_post_meta( $post_id, '_akismet', $this->akismet );
 
 			if ( term_exists( $this->channel, self::channel_taxonomy ) )
 				wp_set_object_terms( $this->id, $this->channel, self::channel_taxonomy );
