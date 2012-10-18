@@ -9,7 +9,9 @@ function flamingo_map_meta_cap( $caps, $cap, $user_id, $args ) {
 		'flamingo_delete_contact' => 'edit_users',
 		'flamingo_edit_inbound_messages' => 'edit_users',
 		'flamingo_delete_inbound_message' => 'edit_users',
-		'flamingo_delete_inbound_messages' => 'edit_users' );
+		'flamingo_delete_inbound_messages' => 'edit_users',
+		'flamingo_spam_inbound_message' => 'edit_users',
+		'flamingo_unspam_inbound_message' => 'edit_users' );
 
 	$caps = array_diff( $caps, array_keys( $meta_caps ) );
 

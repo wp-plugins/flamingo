@@ -195,6 +195,40 @@ class Flamingo_Inbound_Message {
 
 		return (bool) $post;
 	}
+
+	public function spam() {
+		if ( empty( $this->id ) || empty( $this->akismet ) )
+			return;
+
+		if ( isset( $this->akismet['spam'] ) && $this->akismet['spam'] )
+			return;
+
+		if ( empty( $this->akismet['comment'] ) )
+			return;
+
+		if ( flamingo_akismet_submit_spam( $this->akismet['comment'] ) ) {
+			$this->akismet['spam'] = true;
+			update_post_meta( $this->id, '_akismet', $this->akismet );
+			return true;
+		}
+	}
+
+	public function unspam() {
+		if ( empty( $this->id ) || empty( $this->akismet ) )
+			return;
+
+		if ( isset( $this->akismet['spam'] ) && ! $this->akismet['spam'] )
+			return;
+
+		if ( empty( $this->akismet['comment'] ) )
+			return;
+
+		if ( flamingo_akismet_submit_ham( $this->akismet['comment'] ) ) {
+			$this->akismet['spam'] = false;
+			update_post_meta( $this->id, '_akismet', $this->akismet );
+			return true;
+		}
+	}
 }
 
 ?>

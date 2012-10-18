@@ -72,6 +72,10 @@ function flamingo_admin_updated_message() {
 			$updated_message = esc_html( __( 'Messages restored.', 'flamingo' ) );
 		elseif ( 'inbounddeleted' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Messages deleted.', 'flamingo' ) );
+		elseif ( 'inboundspammed' == $_REQUEST['message'] )
+			$updated_message = esc_html( __( 'Messages got marked as spam.', 'flamingo' ) );
+		elseif ( 'inboundunspammed' == $_REQUEST['message'] )
+			$updated_message = esc_html( __( 'Messages got marked as not spam.', 'flamingo' ) );
 		else
 			return;
 	} else {
@@ -380,6 +384,62 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $deleted ) )
 			$redirect_to = add_query_arg( array( 'message' => 'inbounddeleted' ), $redirect_to );
+
+		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( 'spam' == $action && ! empty( $_REQUEST['post'] ) ) {
+		if ( ! is_array( $_REQUEST['post'] ) )
+			check_admin_referer( 'flamingo-spam-inbound-message_' . $_REQUEST['post'] );
+		else
+			check_admin_referer( 'bulk-posts' );
+
+		$submitted = 0;
+
+		foreach ( (array) $_REQUEST['post'] as $post ) {
+			$post = new Flamingo_Inbound_Message( $post );
+
+			if ( empty( $post ) )
+				continue;
+
+			if ( ! current_user_can( 'flamingo_spam_inbound_message', $post->id ) )
+				wp_die( __( 'You are not allowed to spam this item.', 'flamingo' ) );
+
+			if ( $post->spam() )
+				$submitted += 1;
+		}
+
+		if ( ! empty( $submitted ) )
+			$redirect_to = add_query_arg( array( 'message' => 'inboundspammed' ), $redirect_to );
+
+		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( 'unspam' == $action && ! empty( $_REQUEST['post'] ) ) {
+		if ( ! is_array( $_REQUEST['post'] ) )
+			check_admin_referer( 'flamingo-unspam-inbound-message_' . $_REQUEST['post'] );
+		else
+			check_admin_referer( 'bulk-posts' );
+
+		$submitted = 0;
+
+		foreach ( (array) $_REQUEST['post'] as $post ) {
+			$post = new Flamingo_Inbound_Message( $post );
+
+			if ( empty( $post ) )
+				continue;
+
+			if ( ! current_user_can( 'flamingo_unspam_inbound_message', $post->id ) )
+				wp_die( __( 'You are not allowed to unspam this item.', 'flamingo' ) );
+
+			if ( $post->unspam() )
+				$submitted += 1;
+		}
+
+		if ( ! empty( $submitted ) )
+			$redirect_to = add_query_arg( array( 'message' => 'inboundunspammed' ), $redirect_to );
 
 		wp_safe_redirect( $redirect_to );
 		exit();

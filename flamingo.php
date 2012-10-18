@@ -26,6 +26,7 @@ require_once FLAMINGO_PLUGIN_DIR . '/includes/class-contact.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-inbound-message.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/user.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/comment.php';
+require_once FLAMINGO_PLUGIN_DIR . '/includes/akismet.php';
 
 if ( is_admin() )
 	require_once FLAMINGO_PLUGIN_DIR . '/admin/admin.php';
