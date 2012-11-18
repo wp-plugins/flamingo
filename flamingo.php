@@ -23,6 +23,7 @@ require_once FLAMINGO_PLUGIN_DIR . '/includes/functions.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/formatting.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/capabilities.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-contact.php';
+require_once FLAMINGO_PLUGIN_DIR . '/includes/class-channel.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/class-inbound-message.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/user.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/comment.php';
@@ -42,6 +43,7 @@ function flamingo_init() {
 
 	/* Custom Post Types */
 	Flamingo_Contact::register_post_type();
+	Flamingo_Channel::register_post_type();
 	Flamingo_Inbound_Message::register_post_type();
 
 	do_action( 'flamingo_init' );
