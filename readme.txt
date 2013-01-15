@@ -20,6 +20,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 * French (fr_FR) - [Benjamin Cousin](http://www.bewod.com/)
 * Hebrew (he_IL) - [Dan Stramer](http://www.dmdesign.co.il/)
 * Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
+* Spanish (es) - [Israel Ortuño](http://expander.es/)
 * Turkish (tr_TR) - Ömür YANIKOĞLU
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [me](http://ideasilo.wordpress.com/about/) so that I can bundle it into Flamingo. You can download the latest [POT file](http://plugins.svn.wordpress.org/flamingo/trunk/languages/flamingo.pot).
