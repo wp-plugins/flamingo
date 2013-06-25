@@ -2,8 +2,8 @@
 Contributors: takayukister, megumithemes
 Tags: bird, contact, mail, crm
 Requires at least: 3.3
-Tested up to: 3.4.2
-Stable tag: 1.0.3
+Tested up to: 3.5.2
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,10 +30,6 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [me](http://ideasilo.wordpress.com/about/) so that I can bundle it into Flamingo. You can download the latest [POT file](http://plugins.svn.wordpress.org/flamingo/trunk/languages/flamingo.pot).
 
-= Icon Design =
-
-* [Takao Honda](http://www.takaohonda.jp/)
-
 == Installation ==
 
 1. Upload the entire `flamingo` folder to the `/wp-content/plugins/` directory.
@@ -44,6 +40,11 @@ If you have created your own language pack, or have an update of an existing one
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.4 =
+
+* New: flamingo_map_meta_cap filter has been added.
+* Translations for French, Spanish, Slovak, Vietnamese, Italian, Simplified Chinese and Hungarian have been created.
 
 = 1.0.3 =
 
