@@ -31,6 +31,7 @@ class Flamingo_Inbound_Message {
 				'name' => __( 'Flamingo Inbound Message Channels', 'flamingo' ),
 				'singular_name' => __( 'Flamingo Inbound Message Channel', 'flamingo' ) ),
 			'public' => false,
+			'hierarchical' => true,
 			'rewrite' => false,
 			'query_var' => false ) );
 	}
