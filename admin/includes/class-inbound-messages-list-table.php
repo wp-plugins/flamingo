@@ -168,6 +168,7 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 				'hide_empty' => 0,
 				'hide_if_empty' => 1,
 				'orderby' => 'name',
+				'hierarchical' => 1,
 				'selected' => $channel ) );
 
 			submit_button( __( 'Filter', 'flamingo' ),
