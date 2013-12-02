@@ -239,14 +239,33 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 		if ( empty( $item->channel ) )
 			return '';
 
-		$term = get_term_by( 'slug', $item->channel, Flamingo_Inbound_Message::channel_taxonomy );
+		$term = get_term_by( 'slug', $item->channel,
+			Flamingo_Inbound_Message::channel_taxonomy );
 
 		if ( empty( $term ) || is_wp_error( $term ) )
 			return $item->channel;
 
+		$output = '';
+
+		$ancestors = (array) get_ancestors( $term->term_id,
+			Flamingo_Inbound_Message::channel_taxonomy );
+
+		while ( $parent = array_pop( $ancestors ) ) {
+			$parent = get_term( $parent, Flamingo_Inbound_Message::channel_taxonomy );
+
+			if ( empty( $parent ) || is_wp_error( $parent ) )
+				continue;
+
+			$link = admin_url(
+				'admin.php?page=flamingo_inbound&channel=' . $parent->slug );
+
+			$output .= sprintf( '<a href="%1$s" title="%2$s">%3$s</a> / ',
+				$link, esc_attr( $parent->name ), esc_html( $parent->name ) );
+		}
+
 		$link = admin_url( 'admin.php?page=flamingo_inbound&channel=' . $term->slug );
 
-		$output = sprintf( '<a href="%1$s" title="%2$s">%3$s</a>',
+		$output .= sprintf( '<a href="%1$s" title="%2$s">%3$s</a>',
 			$link, esc_attr( $term->name ), esc_html( $term->name ) );
 
 		return $output;
