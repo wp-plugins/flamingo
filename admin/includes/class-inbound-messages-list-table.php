@@ -57,8 +57,17 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 		if ( ! empty( $_REQUEST['channel'] ) )
 			$args['channel'] = $_REQUEST['channel'];
 
-		if ( ! empty( $_REQUEST['post_status'] ) && 'trash' == $_REQUEST['post_status'] )
-			$args['post_status'] = 'trash';
+		$this->is_trash = $this->is_spam = false;
+
+		if ( ! empty( $_REQUEST['post_status'] ) ) {
+			if ( 'trash' == $_REQUEST['post_status'] ) {
+				$args['post_status'] = 'trash';
+				$this->is_trash = true;
+			} elseif ( 'spam' == $_REQUEST['post_status'] ) {
+				$args['post_status'] = Flamingo_Inbound_Message::spam_status;
+				$this->is_spam = true;
+			}
+		}
 
 		$this->items = Flamingo_Inbound_Message::find( $args );
 
@@ -69,27 +78,43 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 			'total_items' => $total_items,
 			'total_pages' => $total_pages,
 			'per_page' => $per_page ) );
-
-		$this->is_trash = isset( $_REQUEST['post_status'] ) && $_REQUEST['post_status'] == 'trash';
 	}
 
 	function get_views() {
 		$status_links = array();
-		$post_status = empty( $_REQUEST['post_status'] ) ? '' : $_REQUEST['post_status'];
+		$post_status = empty( $_REQUEST['post_status'] )
+			? '' : $_REQUEST['post_status'];
 
 		// Inbox
 		Flamingo_Inbound_Message::find( array( 'post_status' => 'any' ) );
 		$posts_in_inbox = Flamingo_Inbound_Message::$found_items;
 
 		$inbox = sprintf(
-			_nx( 'Inbox <span class="count">(%s)</span>', 'Inbox <span class="count">(%s)</span>',
+			_nx( 'Inbox <span class="count">(%s)</span>',
+				'Inbox <span class="count">(%s)</span>',
 				$posts_in_inbox, 'posts', 'flamingo' ),
 			number_format_i18n( $posts_in_inbox ) );
 
 		$status_links['inbox'] = sprintf( '<a href="%1$s"%2$s>%3$s</a>',
 			admin_url( 'admin.php?page=flamingo_inbound' ),
-			'trash' != $post_status ? ' class="current"' : '',
+			( $this->is_trash || $this->is_spam ) ? '' : ' class="current"',
 			$inbox );
+
+		// Spam
+		Flamingo_Inbound_Message::find( array(
+			'post_status' => Flamingo_Inbound_Message::spam_status ) );
+		$posts_in_spam = Flamingo_Inbound_Message::$found_items;
+
+		$spam = sprintf(
+			_nx( 'Spam <span class="count">(%s)</span>',
+				'Spam <span class="count">(%s)</span>',
+				$posts_in_spam, 'posts', 'flamingo' ),
+			number_format_i18n( $posts_in_spam ) );
+
+		$status_links['spam'] = sprintf( '<a href="%1$s"%2$s>%3$s</a>',
+			admin_url( 'admin.php?page=flamingo_inbound&post_status=spam' ),
+			'spam' == $post_status ? ' class="current"' : '',
+			$spam );
 
 		// Trash
 		Flamingo_Inbound_Message::find( array( 'post_status' => 'trash' ) );
@@ -99,7 +124,8 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 			return $status_links;
 
 		$trash = sprintf(
-			_nx( 'Trash <span class="count">(%s)</span>', 'Trash <span class="count">(%s)</span>',
+			_nx( 'Trash <span class="count">(%s)</span>',
+				'Trash <span class="count">(%s)</span>',
 				$posts_in_trash, 'posts', 'flamingo' ),
 			number_format_i18n( $posts_in_trash ) );
 
@@ -207,20 +233,19 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 		$actions['edit'] = '<a href="' . $edit_link . '">'
 			. esc_html( __( 'Edit', 'flamingo' ) ) . '</a>';
 
-		if ( flamingo_akismet_is_active() && ! empty( $item->akismet ) ) {
-			if ( ! empty( $item->akismet['spam'] ) ) {
-				$link = add_query_arg( array( 'action' => 'unspam' ), $url );
-				$link = wp_nonce_url( $link, 'flamingo-unspam-inbound-message_' . $item->id );
+		if ( $item->spam ) {
+			$link = add_query_arg( array( 'action' => 'unspam' ), $url );
+			$link = wp_nonce_url( $link,
+				'flamingo-unspam-inbound-message_' . $item->id );
 
-				$actions['unspam'] = '<a href="' . $link . '">'
-					. esc_html( __( 'Not Spam', 'flamingo' ) ) . '</a>';
-			} else {
-				$link = add_query_arg( array( 'action' => 'spam' ), $url );
-				$link = wp_nonce_url( $link, 'flamingo-spam-inbound-message_' . $item->id );
+			$actions['unspam'] = '<a href="' . $link . '">'
+				. esc_html( __( 'Not Spam', 'flamingo' ) ) . '</a>';
+		} else {
+			$link = add_query_arg( array( 'action' => 'spam' ), $url );
+			$link = wp_nonce_url( $link, 'flamingo-spam-inbound-message_' . $item->id );
 
-				$actions['spam'] = '<a href="' . $link . '">'
-					. esc_html( __( 'Spam', 'flamingo' ) ) . '</a>';
-			}
+			$actions['spam'] = '<a href="' . $link . '">'
+				. esc_html( __( 'Spam', 'flamingo' ) ) . '</a>';
 		}
 
 		$a = sprintf( '<a class="row-title" href="%1$s" title="%2$s">%3$s</a>',

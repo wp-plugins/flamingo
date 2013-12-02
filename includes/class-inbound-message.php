@@ -3,6 +3,7 @@
 class Flamingo_Inbound_Message {
 
 	const post_type = 'flamingo_inbound';
+	const spam_status = 'flamingo-spam';
 	const channel_taxonomy = 'flamingo_inbound_channel';
 
 	public static $found_items = 0;
@@ -17,6 +18,7 @@ class Flamingo_Inbound_Message {
 	public $fields;
 	public $meta;
 	public $akismet;
+	public $spam;
 
 	public static function register_post_type() {
 		register_post_type( self::post_type, array(
@@ -25,6 +27,13 @@ class Flamingo_Inbound_Message {
 				'singular_name' => __( 'Flamingo Inbound Message', 'flamingo' ) ),
 			'rewrite' => false,
 			'query_var' => false ) );
+
+		register_post_status( self::spam_status, array(
+			'label' => __( 'Spam', 'flamingo' ),
+			'public' => false,
+			'exclude_from_search' => true,
+			'show_in_admin_all_list' => false,
+			'show_in_admin_status_list' => true ) );
 
 		register_taxonomy( self::channel_taxonomy, self::post_type, array(
 			'labels' => array(
@@ -89,7 +98,8 @@ class Flamingo_Inbound_Message {
 			'from_email' => '',
 			'fields' => array(),
 			'meta' => array(),
-			'akismet' => array() );
+			'akismet' => array(),
+			'spam' => false );
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -103,6 +113,12 @@ class Flamingo_Inbound_Message {
 		$obj->fields = $args['fields'];
 		$obj->meta = $args['meta'];
 		$obj->akismet = $args['akismet'];
+
+		if ( $args['spam'] ) {
+			$obj->spam = true;
+		} else {
+			$obj->spam = ! empty( $obj->akismet['spam'] );
+		}
 
 		$obj->save();
 
@@ -126,6 +142,12 @@ class Flamingo_Inbound_Message {
 
 			if ( ! empty( $terms ) && ! is_wp_error( $terms ) )
 				$this->channel = $terms[0]->slug;
+
+			if ( self::spam_status == get_post_status( $post ) ) {
+				$this->spam = true;
+			} else {
+				$this->spam = ! empty( $this->akismet['spam'] );
+			}
 		}
 	}
 
@@ -140,10 +162,12 @@ class Flamingo_Inbound_Message {
 
 		$post_content = implode( "\n", $fields );
 
+		$post_status = $this->spam ? self::spam_status : 'publish';
+
 		$postarr = array(
 			'ID' => absint( $this->id ),
 			'post_type' => self::post_type,
-			'post_status' => 'publish',
+			'post_status' => $post_status,
 			'post_title' => $post_title,
 			'post_content' => $post_content );
 
@@ -198,6 +222,16 @@ class Flamingo_Inbound_Message {
 	}
 
 	public function spam() {
+		if ( $this->spam ) {
+			return;
+		}
+
+		$this->akismet_submit_spam();
+		$this->spam = true;
+		$this->save();
+	}
+
+	public function akismet_submit_spam() {
 		if ( empty( $this->id ) || empty( $this->akismet ) )
 			return;
 
@@ -215,6 +249,16 @@ class Flamingo_Inbound_Message {
 	}
 
 	public function unspam() {
+		if ( ! $this->spam ) {
+			return;
+		}
+
+		$this->akismet_submit_ham();
+		$this->spam = false;
+		$this->save();
+	}
+
+	public function akismet_submit_ham() {
 		if ( empty( $this->id ) || empty( $this->akismet ) )
 			return;
 
