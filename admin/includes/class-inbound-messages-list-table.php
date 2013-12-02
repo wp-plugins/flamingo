@@ -153,13 +153,21 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 	function get_bulk_actions() {
 		$actions = array();
 
-		if ( $this->is_trash )
+		if ( $this->is_trash ) {
 			$actions['untrash'] = __( 'Restore', 'flamingo' );
+		}
 
-		if ( $this->is_trash || ! EMPTY_TRASH_DAYS )
+		if ( $this->is_trash || ! EMPTY_TRASH_DAYS ) {
 			$actions['delete'] = __( 'Delete Permanently', 'flamingo' );
-		else
+		} else {
 			$actions['trash'] = __( 'Move to Trash', 'flamingo' );
+		}
+
+		if ( $this->is_spam ) {
+			$actions['unspam'] = __( 'Not Spam', 'flamingo' );
+		} else {
+			$actions['spam'] = __( 'Mark as Spam', 'flamingo' );
+		}
 
 		return $actions;
 	}

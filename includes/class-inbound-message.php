@@ -228,7 +228,8 @@ class Flamingo_Inbound_Message {
 
 		$this->akismet_submit_spam();
 		$this->spam = true;
-		$this->save();
+
+		return $this->save();
 	}
 
 	public function akismet_submit_spam() {
@@ -255,7 +256,8 @@ class Flamingo_Inbound_Message {
 
 		$this->akismet_submit_ham();
 		$this->spam = false;
-		$this->save();
+
+		return $this->save();
 	}
 
 	public function akismet_submit_ham() {
