@@ -1,9 +1,9 @@
 === Flamingo ===
 Contributors: takayukister, megumithemes
 Tags: bird, contact, mail, crm
-Requires at least: 3.3
-Tested up to: 3.5.2
-Stable tag: 1.0.4
+Requires at least: 3.5
+Tested up to: 3.7.1
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,13 @@ If you have created your own language pack, or have an update of an existing one
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.5 =
+
+* New: Support hierarchical channels (aka "sub channels") for inbound messages.
+* Improved spam management.
+* Translation for German has been created.
+* This version requires WordPress 3.5 or higher.
 
 = 1.0.4 =
 
