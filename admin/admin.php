@@ -5,20 +5,32 @@ require_once FLAMINGO_PLUGIN_DIR . '/admin/admin-functions.php';
 add_action( 'admin_menu', 'flamingo_admin_menu', 8 );
 
 function flamingo_admin_menu() {
+	$icon_url = flamingo_plugin_url( 'admin/images/menu-icon.png' );
+
+	if ( defined( 'MP6' ) && MP6
+	|| version_compare( get_bloginfo( 'version' ), '3.8-dev', '>=' ) ) {
+		$icon_url = '';
+	}
+
 	add_object_page(
-		__( 'Flamingo Address Book', 'flamingo' ), __( 'Flamingo', 'flamingo' ),
-		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page',
-		flamingo_plugin_url( 'admin/images/menu-icon.png' ) );
+		__( 'Flamingo Address Book', 'flamingo' ),
+		__( 'Flamingo', 'flamingo' ),
+		'flamingo_edit_contacts', 'flamingo',
+		'flamingo_contact_admin_page', $icon_url );
 
 	$contact_admin = add_submenu_page( 'flamingo',
-		__( 'Flamingo Address Book', 'flamingo' ), __( 'Address Book', 'flamingo' ),
-		'flamingo_edit_contacts', 'flamingo', 'flamingo_contact_admin_page' );
+		__( 'Flamingo Address Book', 'flamingo' ),
+		__( 'Address Book', 'flamingo' ),
+		'flamingo_edit_contacts', 'flamingo',
+		'flamingo_contact_admin_page' );
 
 	add_action( 'load-' . $contact_admin, 'flamingo_load_contact_admin' );
 
 	$inbound_admin = add_submenu_page( 'flamingo',
-		__( 'Flamingo Inbound Messages', 'flamingo' ), __( 'Inbound Messages', 'flamingo' ),
-		'flamingo_edit_inbound_messages', 'flamingo_inbound', 'flamingo_inbound_admin_page' );
+		__( 'Flamingo Inbound Messages', 'flamingo' ),
+		__( 'Inbound Messages', 'flamingo' ),
+		'flamingo_edit_inbound_messages', 'flamingo_inbound',
+		'flamingo_inbound_admin_page' );
 
 	add_action( 'load-' . $inbound_admin, 'flamingo_load_inbound_admin' );
 }
