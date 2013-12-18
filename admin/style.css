@@ -43,3 +43,7 @@ table.message-fields td.field-value li {
 	list-style: disc;
 	margin-left: 1em;
 }
+
+.tagsdiv {
+	margin-top: inherit;
+}
