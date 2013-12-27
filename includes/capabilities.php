@@ -11,7 +11,8 @@ function flamingo_map_meta_cap( $caps, $cap, $user_id, $args ) {
 		'flamingo_delete_inbound_message' => 'edit_users',
 		'flamingo_delete_inbound_messages' => 'edit_users',
 		'flamingo_spam_inbound_message' => 'edit_users',
-		'flamingo_unspam_inbound_message' => 'edit_users' );
+		'flamingo_unspam_inbound_message' => 'edit_users',
+		'flamingo_edit_outbound_messages' => 'edit_users' );
 
 	$meta_caps = apply_filters( 'flamingo_map_meta_cap', $meta_caps );
 
