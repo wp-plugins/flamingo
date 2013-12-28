@@ -96,6 +96,8 @@ function flamingo_admin_updated_message() {
 			$updated_message = esc_html( __( 'Messages got marked as spam.', 'flamingo' ) );
 		elseif ( 'inboundunspammed' == $_REQUEST['message'] )
 			$updated_message = esc_html( __( 'Messages got marked as not spam.', 'flamingo' ) );
+		elseif ( 'outboundupdated' == $_REQUEST['message'] )
+			$updated_message = esc_html( __( 'Messages updated.', 'flamingo' ) );
 		else
 			return;
 	} else {
@@ -226,6 +228,18 @@ function flamingo_load_contact_admin() {
 			echo "\r\n" . flamingo_csv_row( $row );
 		}
 
+		exit();
+	}
+
+	if ( ! empty( $_GET['sendmail'] ) && ! empty( $_REQUEST['contact_tag_id'] ) ) {
+		$redirect_to = admin_url( 'admin.php?page=flamingo_outbound' );
+
+		$redirect_to = add_query_arg( array(
+			'action' => 'new',
+			'contact_tag_id' => absint( $_REQUEST['contact_tag_id'] )
+			), $redirect_to );
+
+		wp_safe_redirect( $redirect_to );
 		exit();
 	}
 
@@ -544,14 +558,47 @@ function flamingo_inbound_edit_page() {
 /* Outbound Messages */
 
 function flamingo_load_outbound_admin() {
+	$action = flamingo_current_action();
+
+	$redirect_to = admin_url( 'admin.php?page=flamingo_outbound' );
+
 	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-	if ( Flamingo_Outbound_Message::post_type == get_post_type( $post_id ) ) {
-		add_meta_box( 'submitdiv', __( 'Save', 'flamingo' ),
-			'flamingo_outbound_submit_meta_box', null, 'side', 'core' );
+	if ( 'save' == $action ) {
+		if ( $post_id ) {
+			check_admin_referer( 'flamingo-update-outbound_' . $post_id );
+		} else {
+			check_admin_referer( 'flamingo-add-outbound' );
+		}
 
-		add_meta_box( 'outboundfieldsdiv', __( 'Fields', 'flamingo' ),
-			'flamingo_outbound_fields_meta_box', null, 'normal', 'core' );
+		if ( ! empty( $_REQUEST['send'] ) ) {
+			// send mail
+		}
+
+		if ( $post_id ) {
+			if ( ! current_user_can( 'flamingo_edit_outbound_message', $post_id ) ) {
+				wp_die( __( 'You are not allowed to edit this item.', 'flamingo' ) );
+			}
+
+//			$post = new Flamingo_Outbound_Message( $post_id );
+		} else {
+//			$post = Flamingo_Outbound_Message::add();
+		}
+
+		//$post->save();
+
+		$redirect_to = add_query_arg( array(
+			'action' => 'edit',
+			//'post' => $post->id,
+			'message' => 'outboundupdated' ), $redirect_to );
+
+		wp_safe_redirect( $redirect_to );
+		exit();
+	}
+
+	if ( 'new' == $action ) {
+		add_meta_box( 'submitdiv', __( 'Send', 'flamingo' ),
+			'flamingo_outbound_submit_meta_box', null, 'side', 'core' );
 
 	} else {
 		if ( ! class_exists( 'Flamingo_Outbound_Messages_List_Table' ) )
@@ -572,7 +619,7 @@ function flamingo_outbound_admin_page() {
 	$action = flamingo_current_action();
 	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
-	if ( 'edit' == $action && Flamingo_Outbound_Message::post_type == get_post_type( $post_id ) ) {
+	if ( 'new' == $action ) {
 		flamingo_outbound_edit_page();
 		return;
 	}
@@ -609,15 +656,28 @@ function flamingo_outbound_admin_page() {
 }
 
 function flamingo_outbound_edit_page() {
-	$post = new Flamingo_Outbound_Message( $_REQUEST['post'] );
+	$action = flamingo_current_action();
+	$post = null;
 
-	if ( empty( $post ) )
-		return;
+	if ( 'edit' == $action ) {
+		$post = new Flamingo_Outbound_Message( $_REQUEST['post'] );
+
+		if ( empty( $post ) )
+			return;
+	} else { // maybe 'new' == $action
+		if ( ! empty( $_REQUEST['contact_tag_id'] ) ) {
+			$tag_id = explode( ',', $_REQUEST['contact_tag_id'] );
+
+			$contact_tag = get_term( $tag_id[0],
+				Flamingo_Contact::contact_tag_taxonomy );
+
+			if ( empty( $contact_tag ) || is_wp_error( $contact_tag ) )
+				$contact_tag = null;
+		}
+	}
 
 	require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/meta-boxes.php';
-
 	include FLAMINGO_PLUGIN_DIR . '/admin/edit-outbound-form.php';
-
 }
 
 ?>

@@ -18,6 +18,7 @@ function flamingo_contact_submit_meta_box( $post ) {
 </div>
 
 <div id="publishing-action">
+<span class="spinner"></span>
 <?php if ( ! empty( $post->id ) ) : ?>
 	<input name="save" type="submit" class="button-primary" id="publish" tabindex="4" accesskey="p" value="<?php echo esc_attr( __( 'Update Contact', 'flamingo' ) ); ?>" />
 <?php else : ?>
@@ -116,6 +117,7 @@ function flamingo_inbound_submit_meta_box( $post ) {
 </div>
 
 <div id="publishing-action">
+<span class="spinner"></span>
 <?php if ( ! empty( $post->id ) ) : ?>
 	<input disabled="disabled" name="save" type="submit" class="button-primary" id="publish" tabindex="4" accesskey="p" value="<?php echo esc_attr( __( 'Update Message', 'flamingo' ) ); ?>" />
 <?php else : ?>
@@ -170,6 +172,62 @@ function flamingo_inbound_fields_meta_box( $post ) {
 
 </tbody>
 </table>
+<?php
+}
+
+function flamingo_outbound_submit_meta_box( $post ) {
+	$initial = empty( $post );
+
+?>
+<div class="submitbox" id="submitlink">
+<div id="minor-publishing">
+<div style="display:none;"><?php submit_button( __( 'Save', 'flamingo' ), 'button', 'save' ); ?></div>
+
+<div id="minor-publishing-actions">
+<div id="save-action">
+<?php if ( $initial || 'publish' != $post->post_status ) : ?>
+<input type="submit" name="save" id="save-post" value="<?php echo esc_attr( __( 'Save Draft', 'flamingo' ) ); ?>" class="button" />
+<span class="spinner"></span>
+<?php endif; ?>
+</div>
+<div class="clear"></div>
+</div><!-- #minor-publishing-actions -->
+
+<div id="misc-publishing-actions">
+<div class="clear"></div>
+</div><!-- #misc-publishing-actions -->
+
+</div><!-- #minor-publishing -->
+
+<div id="major-publishing-actions">
+
+<?php if ( ! $initial ) : ?>
+<div id="delete-action">
+<?php
+	if ( current_user_can( 'flamingo_delete_outbound_message', $post->id ) ) {
+		if ( ! EMPTY_TRASH_DAYS )
+			$delete_text = __( 'Delete Permanently', 'flamingo' );
+		else
+			$delete_text = __( 'Move to Trash', 'flamingo' );
+
+		$delete_link = admin_url(
+			sprintf( 'admin.php?page=flamingo_outbound&post=%s&action=trash', $post->id ) );
+		$delete_link = wp_nonce_url( $delete_link, 'flamingo-trash-outbound-message_' . $post->id );
+
+?><a class="submitdelete deletion" href="<?php echo $delete_link; ?>"><?php echo esc_html( $delete_text ); ?></a><?php } ?>
+</div>
+<?php endif; ?>
+
+<div id="publishing-action">
+<span class="spinner"></span>
+<input name="send" type="submit" class="button-primary" id="publish" tabindex="4" accesskey="p" value="<?php echo esc_attr( __( 'Send Message', 'flamingo' ) ); ?>" />
+</div>
+
+<div class="clear"></div>
+</div><!-- #major-publishing-actions -->
+
+<div class="clear"></div>
+</div>
 <?php
 }
 

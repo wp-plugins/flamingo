@@ -113,6 +113,11 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 				'secondary', false, false, array( 'id' => 'post-query-submit' ) );
 
 			submit_button( __( 'Export', 'flamingo' ), 'secondary', 'export', false );
+
+			if ( $tag ) {
+				submit_button( __( 'Send Mail', 'flamingo' ),
+					'secondary', 'sendmail', false );
+			}
 		}
 ?>
 </div>

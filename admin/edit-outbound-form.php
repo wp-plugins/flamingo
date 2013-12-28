@@ -14,7 +14,13 @@ if ( ! empty( $post->id ) ) {
 <div class="wrap columns-2">
 <?php screen_icon(); ?>
 
-<h2><?php echo esc_html( __( 'Outbound Message', 'flamingo' ) ); ?></h2>
+<h2><?php
+	if ( 'new' == $action ) {
+		echo esc_html( __( 'Compose a Message', 'flamingo' ) );
+	} else {
+		echo esc_html( __( 'Outbound Message', 'flamingo' ) );
+	}
+?></h2>
 
 <?php do_action( 'flamingo_admin_updated_message', $post ); ?>
 
@@ -38,19 +44,27 @@ do_meta_boxes( null, 'side', $post );
 <table class="message-main-fields">
 <tbody>
 
-<tr class="message-date">
-	<th><?php echo esc_html( __( 'Date', 'flamingo' ) ); ?>:</th>
-	<td><?php echo esc_html( $post->date ); ?></td>
-</tr>
-
-<tr class="message-subject">
-	<th><?php echo esc_html( __( 'Subject', 'flamingo' ) ); ?>:</th>
-	<td><?php echo esc_html( $post->subject ); ?></td>
+<tr class="message-to">
+	<th><?php echo esc_html( __( 'To', 'flamingo' ) ); ?>:</th>
+	<td><?php if ( $contact_tag ) : ?>
+		<?php echo esc_html( $contact_tag->name ); ?>
+		<input type="hidden" name="contact-tag-id" value="<?php echo absint( $contact_tag->term_id ); ?>" />
+	<?php endif; ?></td>
 </tr>
 
 <tr class="message-from">
 	<th><?php echo esc_html( __( 'From', 'flamingo' ) ); ?>:</th>
-	<td><?php if ( ! empty( $post->from_email ) ) { ?><a href="<?php echo admin_url( 'admin.php?page=flamingo&s=' . urlencode( $post->from_email ) ); ?>" title="<?php echo esc_attr( $post->from ); ?>"><?php echo esc_html( $post->from ); ?></a><?php } else { echo esc_html( $post->from ); } ?></td>
+	<td><input type="text" name="from" class="large-text" value="" /></td>
+</tr>
+
+<tr class="message-subject">
+	<th><?php echo esc_html( __( 'Subject', 'flamingo' ) ); ?>:</th>
+	<td><input type="text" name="subject" class="large-text" value="" /></td>
+</tr>
+
+<tr class="message-body">
+	<th><?php echo esc_html( __( 'Body', 'flamingo' ) ); ?>:</th>
+	<td><textarea name="body" class="large-text" cols="50" rows="10"></textarea></td>
 </tr>
 
 </tbody>
@@ -65,11 +79,9 @@ do_meta_boxes( null, 'advanced', $post );
 </div><!-- #post-body-content -->
 </div><!-- #post-body -->
 
-<?php if ( $post->id ) : ?>
 <input type="hidden" name="action" value="save" />
+<?php if ( ! empty( $post->id ) ) : ?>
 <input type="hidden" name="post" value="<?php echo (int) $post->id; ?>" />
-<?php else: ?>
-<input type="hidden" name="action" value="add" />
 <?php endif; ?>
 
 </div><!-- #poststuff -->
