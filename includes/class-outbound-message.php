@@ -8,11 +8,10 @@ class Flamingo_Outbound_Message {
 
 	public $id;
 	public $date;
-	public $subject;
+	public $to;
 	public $from;
-	public $from_name;
-	public $from_email;
-	public $fields;
+	public $subject;
+	public $body;
 	public $meta;
 
 	public static function register_post_type() {
@@ -54,22 +53,19 @@ class Flamingo_Outbound_Message {
 
 	public static function add( $args = '' ) {
 		$defaults = array(
-			'subject' => '',
+			'to' => '',
 			'from' => '',
-			'from_name' => '',
-			'from_email' => '',
-			'fields' => array(),
+			'subject' => '',
+			'body' => '',
 			'meta' => array() );
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$obj = new self();
 
-		$obj->subject = $args['subject'];
+		$obj->to = $args['to'];
 		$obj->from = $args['from'];
-		$obj->from_name = $args['from_name'];
-		$obj->from_email = $args['from_email'];
-		$obj->fields = $args['fields'];
+		$obj->subject = $args['subject'];
 		$obj->meta = $args['meta'];
 
 		$obj->save();
@@ -82,11 +78,9 @@ class Flamingo_Outbound_Message {
 			$this->id = $post->ID;
 
 			$this->date = get_the_time( __( 'Y/m/d g:i:s A', 'flamingo' ), $this->id );
-			$this->subject = get_post_meta( $post->ID, '_subject', true );
+			$this->to = get_post_meta( $post->ID, '_to', true );
 			$this->from = get_post_meta( $post->ID, '_from', true );
-			$this->from_name = get_post_meta( $post->ID, '_from_name', true );
-			$this->from_email = get_post_meta( $post->ID, '_from_email', true );
-			$this->fields = get_post_meta( $post->ID, '_fields', true );
+			$this->subject = get_post_meta( $post->ID, '_subject', true );
 			$this->meta = get_post_meta( $post->ID, '_meta', true );
 		}
 	}
@@ -97,10 +91,8 @@ class Flamingo_Outbound_Message {
 		else
 			$post_title = __( '(No Title)', 'flamingo' );
 
-		$fields = flamingo_array_flatten( $this->fields );
-		$fields = array_filter( array_map( 'trim', $fields ) );
-
-		$post_content = implode( "\n", $fields );
+		$post_content = implode( "\n", array(
+			$this->to, $this->from, $this->subject, $this->body ) );
 
 		$post_status = 'publish';
 
@@ -115,11 +107,9 @@ class Flamingo_Outbound_Message {
 
 		if ( $post_id ) {
 			$this->id = $post_id;
-			update_post_meta( $post_id, '_subject', $this->subject );
+			update_post_meta( $post_id, '_to', $this->to );
 			update_post_meta( $post_id, '_from', $this->from );
-			update_post_meta( $post_id, '_from_name', $this->from_name );
-			update_post_meta( $post_id, '_from_email', $this->from_email );
-			update_post_meta( $post_id, '_fields', $this->fields );
+			update_post_meta( $post_id, '_subject', $this->subject );
 			update_post_meta( $post_id, '_meta', $this->meta );
 		}
 
