@@ -25,6 +25,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 * Hungarian (hu_HU) - Rózsahegyi Péter
 * Italian (it_IT) - Rosario Capparelli
 * Japanese (ja) - [Takayuki Miyoshi](http://ideasilo.wordpress.com)
+* Persian (Farsi; fa_IR) - Morteza Rahmani
 * Romanian (ro_RO) - [Inbox Translation](http://inboxtranslation.com/)
 * Slovak (sk_SK) - Branco Radenovich
 * Spanish (es_ES) - [Israel Ortuño](http://expander.es/)
