@@ -115,8 +115,10 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 			submit_button( __( 'Export', 'flamingo' ), 'secondary', 'export', false );
 
 			if ( $tag ) {
+/*
 				submit_button( __( 'Send Mail', 'flamingo' ),
 					'secondary', 'sendmail', false );
+*/
 			}
 		}
 ?>
