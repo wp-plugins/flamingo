@@ -33,7 +33,7 @@ function flamingo_admin_menu() {
 		'flamingo_inbound_admin_page' );
 
 	add_action( 'load-' . $inbound_admin, 'flamingo_load_inbound_admin' );
-/*
+
 	$outbound_admin = add_submenu_page( 'flamingo',
 		__( 'Flamingo Outbound Messages', 'flamingo' ),
 		__( 'Outbound Messages', 'flamingo' ),
@@ -41,7 +41,6 @@ function flamingo_admin_menu() {
 		'flamingo_outbound_admin_page' );
 
 	add_action( 'load-' . $outbound_admin, 'flamingo_load_outbound_admin' );
-*/
 }
 
 add_filter( 'set-screen-option', 'flamingo_set_screen_options', 10, 3 );
