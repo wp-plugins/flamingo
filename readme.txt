@@ -1,9 +1,9 @@
 === Flamingo ===
 Contributors: takayukister, megumithemes
 Tags: bird, contact, mail, crm
-Requires at least: 3.5
-Tested up to: 3.7.1
-Stable tag: 1.0.5
+Requires at least: 3.6
+Tested up to: 3.8.1
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,12 @@ If you have created your own language pack, or have an update of an existing one
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.6 =
+
+* Some admin UI have been modified to fit with WordPress 3.8 admin design.
+* Translations for Arabic, Romanian, Persian and Russian have been created.
+* This version requires WordPress 3.6 or higher.
 
 = 1.0.5 =
 
