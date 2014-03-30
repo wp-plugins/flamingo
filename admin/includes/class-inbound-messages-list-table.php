@@ -199,6 +199,7 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 				'taxonomy' => Flamingo_Inbound_Message::channel_taxonomy,
 				'name' => 'channel_id',
 				'show_option_all' => __( 'View all channels', 'flamingo' ),
+				'show_count' => 1,
 				'hide_empty' => 0,
 				'hide_if_empty' => 1,
 				'orderby' => 'name',
