@@ -135,6 +135,16 @@ class Flamingo_Inbound_Message {
 			$this->from_name = get_post_meta( $post->ID, '_from_name', true );
 			$this->from_email = get_post_meta( $post->ID, '_from_email', true );
 			$this->fields = get_post_meta( $post->ID, '_fields', true );
+
+			foreach ( $this->fields as $key => $value ) {
+				$meta_key = sanitize_key( '_field_' . $key );
+
+				if ( metadata_exists( 'post', $post->ID, $meta_key ) ) {
+					$value = get_post_meta( $post->ID, $meta_key, true );
+					$this->fields[$key] = $value;
+				}
+			}
+
 			$this->meta = get_post_meta( $post->ID, '_meta', true );
 			$this->akismet = get_post_meta( $post->ID, '_akismet', true );
 
@@ -179,6 +189,13 @@ class Flamingo_Inbound_Message {
 			update_post_meta( $post_id, '_from', $this->from );
 			update_post_meta( $post_id, '_from_name', $this->from_name );
 			update_post_meta( $post_id, '_from_email', $this->from_email );
+
+			foreach ( $this->fields as $key => $value ) {
+				$meta_key = sanitize_key( '_field_' . $key );
+				update_post_meta( $post_id, $meta_key, $value );
+				$this->fields[$key] = null;
+			}
+
 			update_post_meta( $post_id, '_fields', $this->fields );
 			update_post_meta( $post_id, '_meta', $this->meta );
 			update_post_meta( $post_id, '_akismet', $this->akismet );
