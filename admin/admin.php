@@ -171,6 +171,8 @@ function flamingo_load_contact_admin() {
 	}
 
 	if ( ! empty( $_GET['export'] ) ) {
+		check_admin_referer( 'bulk-posts' );
+
 		$sitename = sanitize_key( get_bloginfo( 'name' ) );
 
 		$filename = ( empty( $sitename ) ? '' : $sitename . '-' )
@@ -379,6 +381,8 @@ function flamingo_load_inbound_admin() {
 	}
 
 	if ( 'delete_all' == $action ) {
+		check_admin_referer( 'bulk-posts' );
+
 		$_REQUEST['post'] = flamingo_get_all_ids_in_trash(
 			Flamingo_Inbound_Message::post_type );
 
@@ -472,6 +476,8 @@ function flamingo_load_inbound_admin() {
 	}
 
 	if ( ! empty( $_GET['export'] ) ) {
+		check_admin_referer( 'bulk-posts' );
+
 		$sitename = sanitize_key( get_bloginfo( 'name' ) );
 
 		$filename = ( empty( $sitename ) ? '' : $sitename . '-' )
