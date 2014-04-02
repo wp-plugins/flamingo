@@ -178,7 +178,7 @@ function flamingo_load_contact_admin() {
 
 		header( 'Content-Description: File Transfer' );
 		header( "Content-Disposition: attachment; filename=$filename" );
-		header( 'Content-Type: text/csv; charset=' . get_option( 'blog_charset' ), true );
+		header( 'Content-Type: text/csv; charset=' . get_option( 'blog_charset' ) );
 
 		$labels = array(
 			__( 'Email', 'flamingo' ), __( 'Full name', 'flamingo' ),
