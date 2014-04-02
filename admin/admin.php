@@ -497,10 +497,13 @@ function flamingo_load_inbound_admin() {
 		}
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			if ( 'subject' == $_REQUEST['orderby'] )
+			if ( 'subject' == $_REQUEST['orderby'] ) {
 				$args['meta_key'] = '_subject';
-			elseif ( 'from' == $_REQUEST['orderby'] )
+				$args['orderby'] = 'meta_value';
+			} elseif ( 'from' == $_REQUEST['orderby'] ) {
 				$args['meta_key'] = '_from';
+				$args['orderby'] = 'meta_value';
+			}
 		}
 
 		if ( ! empty( $_REQUEST['order'] )

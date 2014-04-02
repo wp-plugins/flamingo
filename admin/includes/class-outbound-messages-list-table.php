@@ -38,10 +38,13 @@ class Flamingo_Outbound_Messages_List_Table extends WP_List_Table {
 			$args['s'] = $_REQUEST['s'];
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			if ( 'subject' == $_REQUEST['orderby'] )
+			if ( 'subject' == $_REQUEST['orderby'] ) {
 				$args['meta_key'] = '_subject';
-			elseif ( 'from' == $_REQUEST['orderby'] )
+				$args['orderby'] = 'meta_value';
+			} elseif ( 'from' == $_REQUEST['orderby'] ) {
 				$args['meta_key'] = '_from';
+				$args['orderby'] = 'meta_value';
+			}
 		}
 
 		if ( ! empty( $_REQUEST['order'] ) && 'asc' == strtolower( $_REQUEST['order'] ) )
