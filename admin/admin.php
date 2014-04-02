@@ -502,6 +502,10 @@ function flamingo_load_inbound_admin() {
 			$args['order'] = 'ASC';
 		}
 
+		if ( ! empty( $_REQUEST['m'] ) ) {
+			$args['m'] = $_REQUEST['m'];
+		}
+
 		if ( ! empty( $_REQUEST['channel_id'] ) ) {
 			$args['channel_id'] = $_REQUEST['channel_id'];
 		}
