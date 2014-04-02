@@ -527,6 +527,7 @@ function flamingo_load_inbound_admin() {
 		}
 
 		$labels = array_keys( $items[0]->fields );
+		$labels[] = __( 'Date', 'flamingo' );
 		echo flamingo_csv_row( $labels );
 
 		foreach ( $items as $item ) {
@@ -543,6 +544,8 @@ function flamingo_load_inbound_admin() {
 
 				$row[] = $col;
 			}
+
+			$row[] = get_post_time( 'c', true, $item->id );
 
 			echo "\r\n" . flamingo_csv_row( $row );
 		}
