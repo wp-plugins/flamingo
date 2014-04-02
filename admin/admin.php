@@ -471,6 +471,75 @@ function flamingo_load_inbound_admin() {
 		exit();
 	}
 
+	if ( ! empty( $_GET['export'] ) ) {
+		$sitename = sanitize_key( get_bloginfo( 'name' ) );
+
+		$filename = ( empty( $sitename ) ? '' : $sitename . '-' )
+			. sprintf( 'flamingo-inbound-%s.csv', date( 'Y-m-d' ) );
+
+		header( 'Content-Description: File Transfer' );
+		header( "Content-Disposition: attachment; filename=$filename" );
+		header( 'Content-Type: text/csv; charset=' . get_option( 'blog_charset' ) );
+
+		$args = array(
+			'posts_per_page' => -1,
+			'orderby' => 'date',
+			'order' => 'DESC' );
+
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			$args['s'] = $_REQUEST['s'];
+		}
+
+		if ( ! empty( $_REQUEST['orderby'] ) ) {
+			if ( 'subject' == $_REQUEST['orderby'] )
+				$args['meta_key'] = '_subject';
+			elseif ( 'from' == $_REQUEST['orderby'] )
+				$args['meta_key'] = '_from';
+		}
+
+		if ( ! empty( $_REQUEST['order'] )
+		&& 'asc' == strtolower( $_REQUEST['order'] ) ) {
+			$args['order'] = 'ASC';
+		}
+
+		if ( ! empty( $_REQUEST['channel_id'] ) ) {
+			$args['channel_id'] = $_REQUEST['channel_id'];
+		}
+		
+		if ( ! empty( $_REQUEST['channel'] ) ) {
+			$args['channel'] = $_REQUEST['channel'];
+		}
+
+		$items = Flamingo_Inbound_Message::find( $args );
+
+		if ( empty( $items ) ) {
+			exit();
+		}
+
+		$labels = array_keys( $items[0]->fields );
+		echo flamingo_csv_row( $labels );
+
+		foreach ( $items as $item ) {
+			$row = array();
+
+			foreach ( $labels as $label ) {
+				$col = isset( $item->fields[$label] ) ? $item->fields[$label] : '';
+
+				if ( is_array( $col ) ) {
+					$col = flamingo_array_flatten( $col );
+					$col = array_filter( array_map( 'trim', $col ) );
+					$col = implode( ', ', $col );
+				}
+
+				$row[] = $col;
+			}
+
+			echo "\r\n" . flamingo_csv_row( $row );
+		}
+
+		exit();
+	}
+
 	$post_id = ! empty( $_REQUEST['post'] ) ? $_REQUEST['post'] : '';
 
 	if ( Flamingo_Inbound_Message::post_type == get_post_type( $post_id ) ) {

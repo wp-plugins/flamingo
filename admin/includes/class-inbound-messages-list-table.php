@@ -208,6 +208,12 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 
 			submit_button( __( 'Filter', 'flamingo' ),
 				'secondary', false, false, array( 'id' => 'post-query-submit' ) );
+
+
+			if ( ! $this->is_spam && ! $this->is_trash ) {
+				submit_button( __( 'Export', 'flamingo' ),
+					'secondary', 'export', false );
+			}
 		}
 
 		if ( $this->is_trash && current_user_can( 'flamingo_delete_inbound_messages' ) ) {
