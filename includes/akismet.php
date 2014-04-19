@@ -22,14 +22,26 @@ function flamingo_akismet_submit( $comment, $as = 'spam' ) {
 	foreach ( (array) $comment as $key => $data )
 		$query_string .= $key . '=' . urlencode( stripslashes( (string) $data ) ) . '&';
 
-	$response = akismet_http_post( $query_string,
-		$akismet_api_host, '/1.1/submit-' . $as, $akismet_api_port );
+	if ( is_callable( array( 'Akismet', 'http_post' ) ) ) { // Akismet v3.0+
+		$response = Akismet::http_post( $query_string, 'submit-' . $as );
+	} else {
+		$response = akismet_http_post( $query_string, $akismet_api_host,
+			'/1.1/submit-' . $as, $akismet_api_port );
+	}
 
 	return (bool) $response[1];
 }
 
 function flamingo_akismet_is_active() {
-	return function_exists( 'akismet_get_key' ) && akismet_get_key();
+	if ( is_callable( array( 'Akismet', 'get_api_key' ) ) ) { // Akismet v3.0+
+		return (bool) Akismet::get_api_key();
+	}
+
+	if ( function_exists( 'akismet_get_key' ) ) {
+		return (bool) akismet_get_key();
+	}
+
+	return false;
 }
 
 ?>
