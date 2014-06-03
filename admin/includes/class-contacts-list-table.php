@@ -146,7 +146,7 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
     }
 
 	function column_full_name( $item ) {
-		return $item->name;
+		return esc_html( $item->name );
 	}
 
 	function column_tags( $item ) {

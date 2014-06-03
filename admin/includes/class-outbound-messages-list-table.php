@@ -195,7 +195,7 @@ class Flamingo_Outbound_Messages_List_Table extends WP_List_Table {
 	}
 
 	function column_from( $item ) {
-		return $item->from;
+		return esc_html( $item->from );
 	}
 
 	function column_date( $item ) {
