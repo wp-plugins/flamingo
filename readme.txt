@@ -33,6 +33,7 @@ Flamingo is a WordPress plugin created to be a total CRM package. With this vers
 * Russian (ru_RU) - [Pavel](http://wlstyling.crimea.ua/)
 * Slovak (sk_SK) - Branco Radenovich
 * Spanish (es_ES) - [Israel Ortuño](http://expander.es/)
+* Swedish (sv_SE) - Erik Gripestam Nord
 * Thai (th) - [TG Knowledge](http://www.เกร็ดความรู้.com/)
 * Turkish (tr_TR) - Ömür YANIKOĞLU
 * Vietnamese (vi_VN) - [ICA Design](http://www.icadesign.vn/)
