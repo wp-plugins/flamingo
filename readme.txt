@@ -1,9 +1,9 @@
 === Flamingo ===
 Contributors: takayukister, megumithemes
 Tags: bird, contact, mail, crm
-Requires at least: 3.6
-Tested up to: 3.9.1
-Stable tag: 1.1.1
+Requires at least: 3.9
+Tested up to: 4.0
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,12 @@ If you have created your own language pack, or have an update of an existing one
 
 == Changelog ==
 
+= 1.2 =
+
+* Tested up to WordPress 4.0.
+* Requires WordPress 3.9 or higher.
+* Translation for Swedish has been created.
+
 = 1.1.1 =
 
 * Fix: misuse of functions that Akismet 3.0 has marked deprecated.
@@ -61,12 +67,6 @@ If you have created your own language pack, or have an update of an existing one
 
 * Support CSV export for inbound messages.
 * Translations for Croatian, Portuguese and Albanian have been created.
-
-= 1.0.6 =
-
-* Some admin UI have been modified to fit with WordPress 3.8 admin design.
-* Translations for Arabic, Romanian, Persian and Russian have been created.
-* This version requires WordPress 3.6 or higher.
 
 == Upgrade Notice ==
 
