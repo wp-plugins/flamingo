@@ -20,7 +20,7 @@ function flamingo_akismet_submit( $comment, $as = 'spam' ) {
 	$query_string = '';
 
 	foreach ( (array) $comment as $key => $data )
-		$query_string .= $key . '=' . urlencode( stripslashes( (string) $data ) ) . '&';
+		$query_string .= $key . '=' . urlencode( wp_unslash( (string) $data ) ) . '&';
 
 	if ( is_callable( array( 'Akismet', 'http_post' ) ) ) { // Akismet v3.0+
 		$response = Akismet::http_post( $query_string, 'submit-' . $as );
