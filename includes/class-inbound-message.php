@@ -117,7 +117,7 @@ class Flamingo_Inbound_Message {
 		if ( $args['spam'] ) {
 			$obj->spam = true;
 		} else {
-			$obj->spam = ! empty( $obj->akismet['spam'] );
+			$obj->spam = isset( $obj->akismet['spam'] ) && $obj->akismet['spam'];
 		}
 
 		$obj->save();
@@ -156,7 +156,7 @@ class Flamingo_Inbound_Message {
 			if ( self::spam_status == get_post_status( $post ) ) {
 				$this->spam = true;
 			} else {
-				$this->spam = ! empty( $this->akismet['spam'] );
+				$this->spam = isset( $this->akismet['spam'] ) && $this->akismet['spam'];
 			}
 		}
 	}
