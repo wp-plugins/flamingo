@@ -5,18 +5,11 @@ require_once FLAMINGO_PLUGIN_DIR . '/admin/admin-functions.php';
 add_action( 'admin_menu', 'flamingo_admin_menu', 8 );
 
 function flamingo_admin_menu() {
-	$icon_url = flamingo_plugin_url( 'admin/images/menu-icon.png' );
-
-	if ( defined( 'MP6' ) && MP6
-	|| version_compare( get_bloginfo( 'version' ), '3.8-dev', '>=' ) ) {
-		$icon_url = '';
-	}
-
 	add_object_page(
 		__( 'Flamingo Address Book', 'flamingo' ),
 		__( 'Flamingo', 'flamingo' ),
 		'flamingo_edit_contacts', 'flamingo',
-		'flamingo_contact_admin_page', $icon_url );
+		'flamingo_contact_admin_page', 'dashicons-feedback' );
 
 	$contact_admin = add_submenu_page( 'flamingo',
 		__( 'Flamingo Address Book', 'flamingo' ),
@@ -518,7 +511,7 @@ function flamingo_load_inbound_admin() {
 		if ( ! empty( $_REQUEST['channel_id'] ) ) {
 			$args['channel_id'] = $_REQUEST['channel_id'];
 		}
-		
+
 		if ( ! empty( $_REQUEST['channel'] ) ) {
 			$args['channel'] = $_REQUEST['channel'];
 		}
@@ -756,5 +749,3 @@ function flamingo_outbound_edit_page() {
 	require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/meta-boxes.php';
 	include FLAMINGO_PLUGIN_DIR . '/admin/edit-outbound-form.php';
 }
-
-?>
