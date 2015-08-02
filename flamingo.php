@@ -11,13 +11,20 @@ Version: 1.2
 
 define( 'FLAMINGO_VERSION', '1.2' );
 
-define( 'FLAMINGO_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'FLAMINGO_PLUGIN', __FILE__ );
 
-define( 'FLAMINGO_PLUGIN_NAME', trim( dirname( FLAMINGO_PLUGIN_BASENAME ), '/' ) );
+define( 'FLAMINGO_PLUGIN_BASENAME',
+	plugin_basename( FLAMINGO_PLUGIN ) );
 
-define( 'FLAMINGO_PLUGIN_DIR', untrailingslashit( dirname( __FILE__ ) ) );
+define( 'FLAMINGO_PLUGIN_NAME',
+	trim( dirname( FLAMINGO_PLUGIN_BASENAME ), '/' ) );
 
-define( 'FLAMINGO_PLUGIN_URL', untrailingslashit( plugins_url( '', __FILE__ ) ) );
+define( 'FLAMINGO_PLUGIN_DIR',
+	untrailingslashit( dirname( FLAMINGO_PLUGIN ) ) );
+
+// Deprecated, not used in the plugin core. Use flamingo_plugin_url() instead.
+define( 'FLAMINGO_PLUGIN_URL',
+	untrailingslashit( plugins_url( '', FLAMINGO_PLUGIN ) ) );
 
 require_once FLAMINGO_PLUGIN_DIR . '/includes/functions.php';
 require_once FLAMINGO_PLUGIN_DIR . '/includes/formatting.php';
@@ -48,5 +55,3 @@ function flamingo_init() {
 
 	do_action( 'flamingo_init' );
 }
-
-?>
