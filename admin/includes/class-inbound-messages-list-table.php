@@ -16,6 +16,9 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 			'channel' => __( 'Channel', 'flamingo' ),
 			'date' => __( 'Date', 'flamingo' ) );
 
+		$columns = apply_filters(
+			'manage_flamingo_inbound_posts_columns', $columns );
+
 		return $columns;
 	}
 
@@ -234,8 +237,9 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 	}
 
 	function column_default( $item, $column_name ) {
-		return '';
-    }
+		do_action( 'manage_flamingo_inbound_posts_custom_column',
+			$column_name, $item->id );
+	}
 
 	function column_cb( $item ) {
 		return sprintf(

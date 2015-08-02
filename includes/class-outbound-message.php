@@ -147,5 +147,3 @@ class Flamingo_Outbound_Message {
 		return (bool) $post;
 	}
 }
-
-?>

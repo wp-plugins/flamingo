@@ -294,5 +294,3 @@ class Flamingo_Inbound_Message {
 		}
 	}
 }
-
-?>

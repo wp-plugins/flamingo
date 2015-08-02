@@ -14,6 +14,9 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 			'history' => __( 'History', 'flamingo' ),
 			'last_contacted' => __( 'Last Contact', 'flamingo' ) );
 
+		$columns = apply_filters(
+			'manage_flamingo_contact_posts_columns', $columns );
+
 		return $columns;
 	}
 
@@ -120,8 +123,9 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 	}
 
 	function column_default( $item, $column_name ) {
-		return '';
-    }
+		do_action( 'manage_flamingo_contact_posts_custom_column',
+			$column_name, $item->id );
+	}
 
 	function column_cb( $item ) {
 		return sprintf(
@@ -143,7 +147,7 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 			esc_html( $item->email ) );
 
 		return '<strong>' . $a . '</strong> ' . $this->row_actions( $actions );
-    }
+	}
 
 	function column_full_name( $item ) {
 		return esc_html( $item->name );
@@ -246,5 +250,3 @@ class Flamingo_Contacts_List_Table extends WP_List_Table {
 		return '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
 	}
 }
-
-?>
