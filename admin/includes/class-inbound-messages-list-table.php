@@ -5,6 +5,9 @@ if ( ! class_exists( 'WP_List_Table' ) )
 
 class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 
+	private $is_trash = false;
+	private $is_spam = false;
+
 	public static function define_columns() {
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
@@ -35,8 +38,9 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 			'orderby' => 'date',
 			'order' => 'DESC' );
 
-		if ( ! empty( $_REQUEST['s'] ) )
+		if ( ! empty( $_REQUEST['s'] ) ) {
 			$args['s'] = $_REQUEST['s'];
+		}
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			if ( 'subject' == $_REQUEST['orderby'] ) {
@@ -51,16 +55,17 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 		if ( ! empty( $_REQUEST['order'] ) && 'asc' == strtolower( $_REQUEST['order'] ) )
 			$args['order'] = 'ASC';
 
-		if ( ! empty( $_REQUEST['m'] ) )
+		if ( ! empty( $_REQUEST['m'] ) ) {
 			$args['m'] = $_REQUEST['m'];
+		}
 
-		if ( ! empty( $_REQUEST['channel_id'] ) )
+		if ( ! empty( $_REQUEST['channel_id'] ) ) {
 			$args['channel_id'] = $_REQUEST['channel_id'];
-		
-		if ( ! empty( $_REQUEST['channel'] ) )
-			$args['channel'] = $_REQUEST['channel'];
+		}
 
-		$this->is_trash = $this->is_spam = false;
+		if ( ! empty( $_REQUEST['channel'] ) ) {
+			$args['channel'] = $_REQUEST['channel'];
+		}
 
 		if ( ! empty( $_REQUEST['post_status'] ) ) {
 			if ( 'trash' == $_REQUEST['post_status'] ) {
@@ -334,5 +339,3 @@ class Flamingo_Inbound_Messages_List_Table extends WP_List_Table {
 		return '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
 	}
 }
-
-?>
